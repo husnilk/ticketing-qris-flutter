@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:myapp/presentation/home/main_page.dart';
 
 import '../../core/core.dart';
@@ -13,8 +17,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-        final emailController = TextEditingController();
+    final emailController = TextEditingController();
     final passwordController = TextEditingController();
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Stack(
@@ -52,11 +57,42 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: true,
                         ),
                         const SpaceHeight(86.0),
-                        Button.filled(
-                          onPressed: () {
-                            context.pushReplacement(const MainPage());
+                        BlocListener<LoginBloc, LoginState>(
+                          listener: (context, state) {
+                            state.maybeWhen(
+                              orElse: () {},
+                              success: (data) {
+                                context.pushReplacement(const MainPage());
+                              },
+                              error: (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(jsonDecode(error)['message']),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              },
+                            );
                           },
-                          label: 'Login',
+                          child: BlocBuilder<LoginBloc, LoginState>(
+                            builder: (context, state) {
+                              return state.maybeWhen(orElse: () {
+                                return Button.filled(
+                                  onPressed: () {
+                                    context.read<LoginBloc>().add(
+                                        LoginEvent.login(
+                                            email: emailController.text,
+                                            password: passwordController.text));
+                                    // context.pushReplacement(const MainPage());
+                                  },
+                                  label: 'Login',
+                                );
+                              }, loading: () {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              });
+                            },
+                          ),
                         ),
                         const SpaceHeight(128.0),
                         Center(

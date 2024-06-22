@@ -38,6 +38,9 @@ class $AssetsIconsGen {
   SvgGenImage get reduceQuantity =>
       const SvgGenImage('assets/icons/reduce_quantity.svg');
 
+  /// Directory path: assets/icons/settings
+  $AssetsIconsSettingsGen get settings => const $AssetsIconsSettingsGen();
+
   /// List of all assets
   List<SvgGenImage> get values =>
       [addQuantity, delete, edit, plus, reduceQuantity];
@@ -107,6 +110,25 @@ class $AssetsIconsPaymentGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [qris, transfer, tunai];
+}
+
+class $AssetsIconsSettingsGen {
+  const $AssetsIconsSettingsGen();
+
+  /// File path: assets/icons/settings/logout.svg
+  SvgGenImage get logout =>
+      const SvgGenImage('assets/icons/settings/logout.svg');
+
+  /// File path: assets/icons/settings/printer.svg
+  SvgGenImage get printer =>
+      const SvgGenImage('assets/icons/settings/printer.svg');
+
+  /// File path: assets/icons/settings/sync-data.svg
+  SvgGenImage get syncData =>
+      const SvgGenImage('assets/icons/settings/sync-data.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [logout, printer, syncData];
 }
 
 class Assets {

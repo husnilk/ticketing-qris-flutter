@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/core/core.dart';
-import 'package:myapp/presentation/auth/login_dart.dart';
+import 'package:myapp/presentation/auth/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,7 +12,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-        Future.delayed(
+    Future.delayed(
       const Duration(seconds: 2),
       () => context.pushReplacement(const LoginPage()),
     );
