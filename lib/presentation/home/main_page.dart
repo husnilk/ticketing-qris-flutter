@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/presentation/auth/bloc/login/logout_page.dart';
+import 'package:myapp/presentation/home/pages/order_page.dart';
 import 'package:myapp/presentation/home/widgets/nav_item.dart';
 
 import '../../core/core.dart';
@@ -15,7 +16,7 @@ class _MainPageState extends State<MainPage> {
 
   int _selectedIndex = 0;
   final _pages = [
-    const Center(child: Text('Home')),
+    const OrderPage(),
     const Center(child: Text('Ticket')),
     const Center(child: Text('History')),
     // const Center(child: Text('Setting')),

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/data/datasources/auth_remote_datasource.dart';
+import 'package:myapp/data/datasources/product_remote_datasource.dart';
 import 'package:myapp/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:myapp/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:myapp/presentation/auth/splash_page.dart';
+import 'package:myapp/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:myapp/presentation/home/bloc/product/product_bloc.dart';
 
 import 'core/core.dart';
 
@@ -26,6 +29,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => LogoutBloc(AuthRemoteDatasource()),
         ),
+        BlocProvider(
+          create: (context) => ProductBloc(ProductRemoteDatasource()),
+        ),
+        BlocProvider(create: (context) => CheckoutBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,9 +41,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
           dialogTheme: const DialogTheme(elevation: 0),
           textTheme: GoogleFonts.outfitTextTheme(
-            Theme
-                .of(context)
-                .textTheme,
+            Theme.of(context).textTheme,
           ),
           appBarTheme: AppBarTheme(
             color: AppColors.white,
