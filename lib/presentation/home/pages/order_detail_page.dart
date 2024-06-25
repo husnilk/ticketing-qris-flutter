@@ -101,13 +101,34 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text('Order Summary'),
-                        Text(
-                          140000.currencyFormatRp,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
+                        BlocBuilder<CheckoutBloc, CheckoutState>(
+                          builder: (context, state){
+                            return state.maybeWhen(
+                              success: (checkout) {
+                                final total = checkout.fold<int>(
+                                  0,
+                                      (previousValue, element) =>
+                                  previousValue +
+                                      element.product.price! * element.quantity,
+                                );
+                                return Text(
+                                  total.currencyFormatRp,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                );
+                              },
+                              orElse: () => const Text(
+                                '0',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
